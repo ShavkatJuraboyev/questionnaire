@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>So‘rovnomalar</h2>
+<ul>
+  {% for s in surveys %}
+    <li>{{ s.title }}</li>
+  {% empty %}
+    <li>Hech qanday so‘rovnoma topilmadi</li>
+  {% endfor %}
+</ul>
+{% endblock %}

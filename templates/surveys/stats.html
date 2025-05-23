@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container mt-4">
+  <h3>Statistika: {{ survey.title }}</h3>
+  {% for item in data %}
+    <div class="mb-3">
+      <h5>{{ item.question.text }}</h5>
+      <ul>
+        {% for option in item.options %}
+          <li>{{ option.text }} — {{ option.count }} ta</li>
+        {% endfor %}
+      </ul>
+    </div>
+    <canvas id="myChart" width="400" height="200"></canvas>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+const ctx = document.getElementById('myChart');
+
+const data = {
+  labels: [{% for item in data %}"{{ item.question.text }}",{% endfor %}],
+  datasets: [{
+    label: 'Javoblar soni',
+    data: [{% for item in data %}{{ item.options|length }},{% endfor %}],
+    backgroundColor: 'rgba(54, 162, 235, 0.5)',
+    borderColor: 'rgba(54, 162, 235, 1)',
+    borderWidth: 1
+  }]
+};
+
+new Chart(ctx, {
+  type: 'bar',
+  data: data,
+  options: {
+    responsive: true,
+    scales: {
+      y: {
+        beginAtZero: true,
+        stepSize: 1
+      }
+    }
+  }
+});
+  {% endfor %}
+</div>
+{% endblock %}
+
+
+</script>
+
